@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login';
 
 import UserMain from './components/UserMain';
-import Reward from './components/Reward';
 
 function App() {
   // Simulate a user authentication state
@@ -32,7 +31,6 @@ function App() {
   }, [auth]);
 
   // Simulate a login function
-  const login = () => setIsLoggedIn(true);
   const logout = () => {
     auth.signOut();
     setIsLoggedIn(false);
