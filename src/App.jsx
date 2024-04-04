@@ -4,10 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 //init firebase
 import './firebase-config';
+
+import Reward from './components/reward'
+
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Link, Outlet } from 'react-router-dom';
 import Login from './components/login';
-
 
 
 function App() {
@@ -71,12 +73,12 @@ function Home({ auth }) {
 
 function About() {
   return (
+
     <div>
       <h2>About Page</h2>
     </div>
   );
 }
-
 function NotFound() {
   return <h2>404 Not Found</h2>;
 }
