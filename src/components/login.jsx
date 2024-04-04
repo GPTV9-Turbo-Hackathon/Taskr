@@ -1,25 +1,37 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-const LoginWithEmailPassword = async (email, password) => {
-  const auth = getAuth();
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    // User logged in
-    console.log("User logged in:", userCredential.user);
-  } catch (error) {
-    console.error("Error logging in:", error);
-  }
-};
+import { useState } from 'react';
+import { getAuth, signInWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const auth = getAuth();
+
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // Login successful.
+    } catch (error) {
+      console.error("Error signing in with email and password", error);
+    }
+  };
+
+  const handleAnonymousLogin = async () => {
+    try {
+      await signInAnonymously(auth);
+      // Anonymous login successful.
+    } catch (error) {
+      console.error("Error signing in anonymously", error);
+    }
+  };
+
   return (
     <div>
-      <h1>Login</h1>
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleAnonymousLogin}>Login Anonymously</button>
     </div>
   );
 }
 
 export default Login;
-
-// Example usage:
-// loginWithEmailPassword('user@example.com', 'password123');
