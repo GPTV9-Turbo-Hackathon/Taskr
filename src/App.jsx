@@ -40,20 +40,21 @@ function App() {
   };
 
   return (
-    <Router>
-      <Routes>
-        {isLoggedIn ? (
-          <>
-            <Route path="/" element={<Home auth={auth} />} />
-            <Route path="about" element={<About />} />
-            <Route path="/main" element={<UserMain onSignoutClick={logout} />} />
-            <Route path="*" element={<NotFound />} />
-          </>
-        ) : (
-          <Route path="*" element={<Login auth={auth} />} />
-        )}
-      </Routes>
-    </Router>
+    <div className="h-full w-full">
+      <Router>
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={isLoggedIn ? <Navigate to="/main" /> : <Home auth={auth} />} />
+              <Route path="/main" element={isLoggedIn ? <UserMain onSignoutClick={logout} /> : <Navigate to="/" />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </>
+          ) : (
+            <Route path="*" element={<Login auth={auth} />} />
+          )}
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
@@ -70,17 +71,6 @@ function Home({ auth }) {
       <Navigate to="/main" />
     </div>
   );
-}
-
-function About() {
-  return (
-    <div>
-      <h2>About Page</h2>
-    </div>
-  );
-}
-function NotFound() {
-  return <h2>404 Not Found</h2>;
 }
 
 export default App;
