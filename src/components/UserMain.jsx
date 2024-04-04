@@ -3,11 +3,11 @@ import SideBar from './Sidebar';
 import TaskList from './TaskList';
 import ReviewList from './ReviewList';
 
-function UserMain() {
+function UserMain({onSignoutClick}) {
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-5 mx-0 px-0 h-full">
       <div className="col-span-1">
-        <SideBar />
+        <SideBar onSignoutClick={onSignoutClick} />
       </div>
 
       <div className="col-span-2">

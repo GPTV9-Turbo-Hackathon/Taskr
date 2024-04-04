@@ -35,7 +35,6 @@ function App() {
   // Simulate a login function
   const login = () => setIsLoggedIn(true);
   const logout = () => {
-    console.log('logout');
     auth.signOut();
     setIsLoggedIn(false);
   };
