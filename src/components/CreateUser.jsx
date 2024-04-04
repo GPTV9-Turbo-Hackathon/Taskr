@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../firebase-config';
-import { ref, set } from 'firebase/database';
+import { db } from '../firebase-config';
+import {ref, set } from 'firebase/database';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -10,11 +11,14 @@ function CreateUser({ auth }) {
   const [passwordTwo, setPasswordTwo] = useState('');
 
   const createUserInDatabase = async (user) => {
-    const db = ref(getDatabase());
-    await set(ref(db, `users/${user.uid}`), {
-      email: user.email,
-      uid: user.uid,
-    });
+    try {
+      await set(ref(db, `users/${user.uid}`), {
+        email: user.email,
+        uid: user.uid,
+      });
+    } catch (error) {
+      console.error('Error creating user in database', error);
+    }
   };
   const handleCreateUser = async (e) => {
     e.preventDefault();

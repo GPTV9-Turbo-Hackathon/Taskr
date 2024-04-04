@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 //init firebase
-import './firebase-config';
+import {auth} from './firebase-config';
+import { getDatabase,ref, set } from 'firebase/database';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -13,7 +14,7 @@ import UserMain from './components/UserMain';
 function App() {
   // Simulate a user authentication state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const auth = getAuth();
+  // const auth = getAuth();
 
   useEffect(() => {
     // This observer gets called whenever the user's sign-in state changes.

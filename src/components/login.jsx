@@ -24,7 +24,6 @@ function Login({ auth }) {
   const naviagte = useNavigate();
 
   const handleLogin = async (e) => {
-    console.log('login');
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
