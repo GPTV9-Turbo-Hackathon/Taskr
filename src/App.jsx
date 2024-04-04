@@ -6,6 +6,7 @@ import './firebase-config';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
+import CreateUser from './components/CreateUser';
 
 import UserMain from './components/UserMain';
 
@@ -47,7 +48,11 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
             </>
           ) : (
-            <Route path="*" element={<Login auth={auth} />} />
+            <>
+              <Route path="/" element={<Login auth={auth} />} />
+              <Route path="/create-user" element={<CreateUser auth={auth} />} />
+              <Route path="*" element={<Login auth={auth} />} />
+            </>
           )}
         </Routes>
       </Router>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
+import {signInWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
+import {useNavigate} from 'react-router-dom';
 
 /*
   Link: https://tailwindui.com/components/application-ui/forms/sign-in-forms
@@ -16,14 +17,14 @@ import { getAuth, signInWithEmailAndPassword, signInAnonymously } from 'firebase
   }
   ```
 */
-function Login({auth}) {
-
+function Login({ auth }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const naviagte = useNavigate();
 
   const handleLogin = async (e) => {
-    console.log("login")
+    console.log('login');
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -41,6 +42,10 @@ function Login({auth}) {
       console.error('Error signing in anonymously', error);
     }
   };
+
+  const handleCreateUserClick = () => {
+    naviagte('/create-user')
+  }
 
   return (
     <>
@@ -113,6 +118,13 @@ function Login({auth}) {
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               Anonymous login
+            </button>
+            {' '}Or{' '}
+            <button
+              onClick={handleCreateUserClick}
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Create an account
             </button>
           </p>
         </div>
