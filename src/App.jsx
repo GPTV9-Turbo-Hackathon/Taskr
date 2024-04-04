@@ -3,13 +3,13 @@ import './App.css';
 //init firebase
 import './firebase-config';
 
-
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from 'react-router-dom';
-import Login from './components/login';
+import Login from './components/Login';
+import NavBar from './components/NavBar';
 
 import UserMain from './components/UserMain';
-import Reward from './components/reward';
+import Reward from './components/Reward';
 
 function App() {
   // Simulate a user authentication state
@@ -34,20 +34,21 @@ function App() {
 
   // Simulate a login function
   const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  const logout = () => {
+    console.log('logout');
+    auth.signOut();
+    setIsLoggedIn(false);
+  };
 
   return (
     <Router>
-      <nav>
-        <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/login">Login</Link>
-      </nav>
       <Routes>
         {isLoggedIn ? (
           <>
             <Route path="/" element={<Home auth={auth} />} />
             <Route path="about" element={<About />} />
+            <Route path="/main" element={<UserMain onSignoutClick={logout} />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/main" element={<UserMain />} />
           </>
         ) : (
           <Route path="*" element={<Login auth={auth} />} />

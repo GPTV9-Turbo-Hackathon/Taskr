@@ -5,7 +5,7 @@ import ReviewList from './ReviewList';
 
 function UserMain() {
   return (
-    <div className="grid grid-cols-5">
+    <div className="grid grid-cols-5 gap-4">
       <div className="col-span-1">
         <SideBar />
       </div>
