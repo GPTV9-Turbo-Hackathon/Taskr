@@ -15,6 +15,14 @@ function Login() {
   return (
     <div>
       <h1>Login</h1>
+      <p>Username</p>
+      <input type="text" placeholder="Enter your username" />
+      <p>Password</p>
+      <input type="password" placeholder="Enter your password" />
+      <button onClick={LoginWithEmailPassword}>Login</button>
+      <button onClick={() => {
+        window.location.href = "/register";
+      }}>Register</button>
     </div>
   );
 }
