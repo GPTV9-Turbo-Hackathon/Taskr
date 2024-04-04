@@ -1,39 +1,86 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 //init firebase
 import './firebase-config';
+
 import Reward from './components/reward'
 
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { BrowserRouter as Router, Routes, Route, Link, Outlet } from 'react-router-dom';
+import Login from './components/login';
+
+
 function App() {
-  const [count, setCount] = useState(0)
+  // Simulate a user authentication state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const auth = getAuth();
+
+  useEffect(() => {
+    // This observer gets called whenever the user's sign-in state changes.
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in.
+        setIsLoggedIn(true);
+      } else {
+        // User is signed out.
+        setIsLoggedIn(false);
+      }
+    });
+
+    // Clean up the subscription on unmount
+    return () => unsubscribe();
+  }, [auth]);
+
+  // Simulate a login function
+  const login = () => setIsLoggedIn(true);
+  const logout = () => setIsLoggedIn(false);
+  
+  return (
+    <Router>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/login">Login</Link>
+      </nav>
+      <Routes>
+        {isLoggedIn ? (
+          <>
+            <Route path="/" element={<Home auth={auth} />} />
+            <Route path="about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </>
+        ) : (
+          <Route path="*" element={<Login auth={auth} />} />
+        )}
+      </Routes>
+    </Router>
+  );
+}
+
+function Home({ auth }) {
+  const logout = () => {
+    auth.signOut();
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <Reward />
-    </>
-  )
+    <div>
+      <p>Your User ID: {auth.currentUser.uid}</p>
+      <h2>Home Page</h2>
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
+}
+
+function About() {
+  return (
+
+    <div>
+      <h2>About Page</h2>
+    </div>
+  );
+}
+function NotFound() {
+  return <h2>404 Not Found</h2>;
 }
 
 export default App
