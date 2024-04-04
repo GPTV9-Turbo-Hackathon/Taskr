@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
 //init firebase
 import './firebase-config';
 
-import Reward from './components/reward'
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { BrowserRouter as Router, Routes, Route, Link, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from 'react-router-dom';
 import Login from './components/login';
 
+import UserMain from './components/UserMain';
+import Reward from './components/reward';
 
 function App() {
   // Simulate a user authentication state
@@ -36,7 +35,7 @@ function App() {
   // Simulate a login function
   const login = () => setIsLoggedIn(true);
   const logout = () => setIsLoggedIn(false);
-  
+
   return (
     <Router>
       <nav>
@@ -48,6 +47,7 @@ function App() {
             <Route path="/" element={<Home auth={auth} />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/main" element={<UserMain />} />
           </>
         ) : (
           <Route path="*" element={<Login auth={auth} />} />
@@ -67,13 +67,13 @@ function Home({ auth }) {
       <p>Your User ID: {auth.currentUser.uid}</p>
       <h2>Home Page</h2>
       <button onClick={logout}>Logout</button>
+      <Navigate to="/main" />
     </div>
   );
 }
 
 function About() {
   return (
-
     <div>
       <h2>About Page</h2>
     </div>
@@ -83,4 +83,4 @@ function NotFound() {
   return <h2>404 Not Found</h2>;
 }
 
-export default App
+export default App;
