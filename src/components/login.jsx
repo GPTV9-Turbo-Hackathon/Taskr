@@ -19,5 +19,7 @@ function Login() {
   );
 }
 
+export default Login;
+
 // Example usage:
 // loginWithEmailPassword('user@example.com', 'password123');

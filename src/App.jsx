@@ -5,6 +5,7 @@ import './App.css'
 //init firebase
 import './firebase-config';
 import { BrowserRouter as Router, Routes, Route, Link, Outlet } from 'react-router-dom';
+import Login from './components/login';
 
 
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
