@@ -48,6 +48,7 @@ function App() {
             <Route path="/" element={<Home auth={auth} />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="reward" element={<Reward />} />
           </>
         ) : (
           <Route path="*" element={<Login auth={auth} />} />
