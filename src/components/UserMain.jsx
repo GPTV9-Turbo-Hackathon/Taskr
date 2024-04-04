@@ -5,7 +5,7 @@ import ReviewList from './ReviewList';
 
 function UserMain({onSignoutClick}) {
   return (
-    <div className="grid grid-cols-5 mx-0 px-0 h-full">
+    <div className="grid grid-cols-5 h-full w-full">
       <div className="col-span-1">
         <SideBar onSignoutClick={onSignoutClick}/>
       </div>

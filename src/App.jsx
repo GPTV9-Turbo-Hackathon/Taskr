@@ -4,9 +4,8 @@ import './App.css';
 import './firebase-config';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
-import NavBar from './components/NavBar';
 
 import UserMain from './components/UserMain';
 import Reward from './components/Reward';

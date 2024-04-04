@@ -2,7 +2,7 @@ import React from "react";
 
 function SideBar({onSignoutClick}) {
   return (
-    <div className="flex flex-col justify-between bg-slate-500">
+    <div className="flex flex-col justify-between bg-slate-500 h-full">
       <p>Here should be a rounded avatar photo</p>
       <p>Last, First</p>
       <p>Here's should be unread notification button</p>
