@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import {signInWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
-import {useNavigate} from 'react-router-dom';
+import { signInWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import LoginInputBox from './helpers/LoginInputBox';
 
 /*
   Link: https://tailwindui.com/components/application-ui/forms/sign-in-forms
@@ -43,8 +44,8 @@ function Login({ auth }) {
   };
 
   const handleCreateUserClick = () => {
-    naviagte('/create-user')
-  }
+    naviagte('/create-user');
+  };
 
   return (
     <>
@@ -62,43 +63,24 @@ function Login({ auth }) {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleLogin}>
-            <div>
-              <label htmlFor="email" className="text-left block text-sm font-medium leading-6 text-gray-900">
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+            <LoginInputBox
+              htmlFor="email"
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              text="Email address"
+            />
+            <LoginInputBox
+              htmlFor="password"
+              id="passowrd"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              text="Enter your password"
+            />
 
             <div>
               <button
@@ -117,8 +99,8 @@ function Login({ auth }) {
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               Anonymous login
-            </button>
-            {' '}Or{' '}
+            </button>{' '}
+            Or{' '}
             <button
               onClick={handleCreateUserClick}
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import '../firebase-config';
 import { db } from '../firebase-config';
-import {ref, set } from 'firebase/database';
+import { ref, set } from 'firebase/database';
+
+import LoginInputBox from './helpers/LoginInputBox';
+import { useNavigate } from 'react-router-dom';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -9,6 +12,8 @@ function CreateUser({ auth }) {
   const [email, setEmail] = useState('');
   const [passwordOne, setPasswordOne] = useState('');
   const [passwordTwo, setPasswordTwo] = useState('');
+
+  const navigate = useNavigate();
 
   const createUserInDatabase = async (user) => {
     try {
@@ -47,63 +52,33 @@ function CreateUser({ auth }) {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleCreateUser}>
-            <div>
-              <label htmlFor="email" className="text-left block text-sm font-medium leading-6 text-gray-900">
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="passwordOne"
-                  name="passwordTwo"
-                  type="password"
-                  value={passwordOne}
-                  onChange={(e) => setPasswordOne(e.target.value)}
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Re-enter password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="passwordTwo"
-                  name="passwordTwo"
-                  type="password"
-                  value={passwordTwo}
-                  onChange={(e) => setPasswordTwo(e.target.value)}
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+            <LoginInputBox
+              htmlFor="email"
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              text="Email address"
+            />
+            <LoginInputBox
+              htmlFor="passwordOne"
+              id="passowrdOne"
+              name="passwordOne"
+              type="password"
+              value={passwordOne}
+              onChange={(e) => setPasswordOne(e.target.value)}
+              text="Enter your password"
+            />
+            <LoginInputBox
+              htmlFor="passwordTwo"
+              id="passowrdTwo"
+              name="passwordTwo"
+              type="password"
+              value={passwordTwo}
+              onChange={(e) => setPasswordTwo(e.target.value)}
+              text="Enter your password again"
+            />
 
             {passwordOne === passwordTwo ? (
               <div>
@@ -118,6 +93,13 @@ function CreateUser({ auth }) {
               <p className="text-red-400">Passwords doesn't match!</p>
             )}
           </form>
+          <p>Or</p>
+          <button
+            onClick={() => navigate(-1)}
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Go back
+          </button>
         </div>
       </div>
     </>
