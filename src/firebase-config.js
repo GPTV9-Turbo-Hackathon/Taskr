@@ -16,7 +16,7 @@ const firebaseConfig = {
   messagingSenderId: "703918325036",
   appId: "1:703918325036:web:b2f6a04872b968aa808089",
   measurementId: "G-JMH7L83GEM",
-  databaseURL: "https://taskr-46a3f-default-rtdb.asia-southeast1.firebasedatabase.app"
+  databaseURL: "https://taskr-46a3f-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
 // Initialize Firebase
