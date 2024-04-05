@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 
 function Task({ task }) {
-  const {dueDate, title} = task;
+  const { dueDate, title } = task;
 
   const [status, setStatus] = useState(task.status);
   const [selectedTask, setSelectedTask] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const updateTaskStatus = (newStatus) => {
-    setStatus((prev) => {return newStatus;});
+    setStatus((prev) => {
+      return newStatus;
+    });
   };
 
   const openTaskDetails = (task) => {
@@ -40,20 +42,29 @@ function Task({ task }) {
     }
   };
 
+  let listContainerAttributes = '';
+  if (status === 'On Hold') {
+    listContainerAttributes = 'bg-yellow-100 shadow rounded-md mb-4';
+  } else if (status === 'Submitted, pending review') {
+    listContainerAttributes = 'bg-slate-300 shadow rounded-md mb-4';
+  } else {
+    listContainerAttributes = 'bg-white shadow rounded-md mb-4';
+  }
+
   return (
     <>
       {/* Where the list showd */}
-      <div className="bg-white shadow rounded-md mb-4">
-          <div className="grid grid-cols-4 px-6 py-4 border-b border-gray-200 last:border-b-0">
-            <button
-              onClick={() => openTaskDetails(task)}
-              className="col-span-1 text-sm font-medium text-blue-600 hover:text-blue-800 transition ease-in-out duration-150"
-            >
-              {title}
-            </button>
-            <div className="text-sm text-gray-600">{dueDate}</div>
-            <div className="text-sm text-gray-600">{status}</div>
-          </div>
+      <div className={listContainerAttributes}>
+        <div className="grid grid-cols-4 px-6 py-4 border-b border-gray-200 last:border-b-0">
+          <button
+            onClick={() => openTaskDetails(task)}
+            className="col-span-1 text-sm font-medium text-blue-600 hover:text-blue-800 transition ease-in-out duration-150"
+          >
+            {title}
+          </button>
+          <div className="text-sm text-gray-600">{dueDate}</div>
+          <div className="text-sm text-gray-600">{status}</div>
+        </div>
       </div>
       {/* Task Details Modal */}
       {selectedTask && (
@@ -118,6 +129,5 @@ function Task({ task }) {
     </>
   );
 }
-
 
 export default Task;

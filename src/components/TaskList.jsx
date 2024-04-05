@@ -3,7 +3,6 @@ import React from 'react';
 import Task from './Task';
 
 function TaskList({ realTasks }) {
-
   const tasks = realTasks || [];
 
   return (
