@@ -1,7 +1,6 @@
 // import React, {useState} from 'react';
-import React, { useState } from 'react';
+import React from 'react';
 import Task from './Task';
-import { useEffect } from 'react';
 
 function TaskList({ realTasks }) {
 

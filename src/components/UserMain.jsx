@@ -3,6 +3,7 @@ import SideBar from './Sidebar';
 import TaskList from './TaskList';
 
 function UserMain({ onSignoutClick, tasks, reviews }) {
+
   // Sort to list the one with the nearest due date first
   tasks.sort((a,b) => {
     const aDate = new Date(a.dueDate);
