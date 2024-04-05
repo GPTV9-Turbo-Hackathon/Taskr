@@ -1,12 +1,21 @@
 import React from 'react';
 import Task from './Task';
+import sampleTask from './helpers/mockTaskList';
 
-function TaskList() {
+function TaskList( {tasks} ) {
   return (
     <div>
-      <p>This this is a task list</p>
+      {sampleTask.map((task, index) => (
+        <Task
+          key={index}
+          creator={task.creator}
+          title={task.title}
+          description={task.description}
+          dueDate={task.dueDate.toString()}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
 export default TaskList;
