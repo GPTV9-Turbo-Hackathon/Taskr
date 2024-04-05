@@ -4,7 +4,7 @@ import sampleTask from './helpers/mockTaskList';
 
 function TaskList( {tasks} ) {
   return (
-    <div>
+        <div className="flex flex-col justify-between h-full">
       {sampleTask.map((task, index) => (
         <Task
           key={index}
