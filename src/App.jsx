@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import './App.css';
 //init firebase
-import { auth } from './firebase-config';
+import { auth, db } from './firebase-config';
+import {get, ref} from 'firebase/database';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -16,8 +17,8 @@ function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
         // If user is logged in, store user details in localStorage
@@ -59,11 +60,25 @@ function App() {
   // Simulate a user authentication state
   const { currentUser } = useAuth(); // Use the useAuth hook here
   const isLoggedIn = !!currentUser;
+
+  const [tasks, setTasks] = useState([]);
+  const [reviews, setReviews] = useState([]);
+
+
   
   useEffect(() => {
     // This will now re-run whenever currentUser changes, ensuring currentUser is not null when accessed
     if (currentUser) {
-      console.log(currentUser.uid);
+      const uid = currentUser.uid;
+      const usersRef = ref(db, `users/${uid}`)
+      get(usersRef).then((snapshot) => {
+        const userData =  snapshot.val();
+        setTasks(userData.tasks);
+      })
+      get(usersRef).then((snapshot) => {
+        const userData = snapshot.val();
+        userData.eligibleForReview && setReviews(userData.reviews);
+      })
     }
   }, [currentUser]); // Add currentUser as a dependency
 
@@ -80,10 +95,10 @@ function App() {
           {isLoggedIn ? (
             <>
               <Route path="/" element={isLoggedIn ? <Navigate to="/main" /> : <Home auth={auth} />} />
-              <Route path="/main" element={<UserMain onSignoutClick={logout} />} />
+              <Route path="/main" element={<UserMain onSignoutClick={logout} tasks={tasks} reviews={reviews} />} />
               <Route path="*" element={<Navigate to="/" />} />
               <Route path="/addtask" element={<AddTask auth={auth} />} />
-              <Route path="/rewardsl" element={<Reward />} />
+              <Route path="/rewards" element={<Reward />} />
             </>
           ) : (
             <>

@@ -2,7 +2,7 @@ import React from 'react';
 import SideBar from './Sidebar';
 import TaskList from './TaskList';
 
-function UserMain({ onSignoutClick }) {
+function UserMain({ onSignoutClick, tasks, reviews }) {
   return (
     <div className="grid grid-cols-5 h-full w-full">
       <div className="col-span-1">
@@ -10,8 +10,9 @@ function UserMain({ onSignoutClick }) {
       </div>
 
       <div className="col-span-4">
-        <TaskList />
+        <TaskList realTasks={tasks}/>
       </div>
+
 
     </div>
   );

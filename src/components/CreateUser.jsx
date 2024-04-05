@@ -35,13 +35,13 @@ function CreateUser({ auth }) {
         // TODO: Create initial value for every user
         // reviews: { 1: '1' },
         tasks: sampleTask.map((task, index) => {
-          return {
+          return { 
             id: index,
-            creator: task.creator,
+            creatorID: task.creatorID,
             title: task.title,
             description: task.description,
             dueDate: task.dueDate.toString(),
-            completed: false,
+            status: task.status,
           };
         }),
       });

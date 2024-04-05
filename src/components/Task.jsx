@@ -1,9 +1,15 @@
-import Review from './Review';
 import React, { useState } from 'react';
 
-function Task({ tasks, updateTaskStatus }) {
+function Task({ task }) {
+  const {dueDate, title} = task;
+
+  const [status, setStatus] = useState(task.status);
   const [selectedTask, setSelectedTask] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const updateTaskStatus = (newStatus) => {
+    setStatus((prev) => {return newStatus;});
+  };
 
   const openTaskDetails = (task) => {
     setSelectedTask(task);
@@ -21,7 +27,7 @@ function Task({ tasks, updateTaskStatus }) {
 
   const handleConfirmSubmit = () => {
     if (selectedTask) {
-      updateTaskStatus(selectedTask.id, 'Submitted');
+      updateTaskStatus('Submitted, pending review');
       setShowConfirmModal(false);
       setSelectedTask(null);
     }
@@ -29,30 +35,25 @@ function Task({ tasks, updateTaskStatus }) {
 
   const setOnHold = () => {
     if (selectedTask) {
-      updateTaskStatus(selectedTask.id, 'On Hold');
+      updateTaskStatus('On Hold');
       setSelectedTask(null);
     }
   };
 
-  // Ensure tasks is always treated as an array
-  const tasksArray = Array.isArray(tasks) ? tasks : [];
-
   return (
     <>
+      {/* Where the list showd */}
       <div className="bg-white shadow rounded-md mb-4">
-        {tasksArray.map((task) => (
-          <div key={task.id} className="grid grid-cols-4 px-6 py-4 border-b border-gray-200 last:border-b-0">
+          <div className="grid grid-cols-4 px-6 py-4 border-b border-gray-200 last:border-b-0">
             <button
               onClick={() => openTaskDetails(task)}
               className="col-span-1 text-sm font-medium text-blue-600 hover:text-blue-800 transition ease-in-out duration-150"
             >
-              {task.name}
+              {title}
             </button>
-            <div className="text-sm text-gray-600">{task.deadline}</div>
-            <div className="text-sm text-gray-600">{task.status}</div>
-            <div className="text-sm text-gray-600">{task.assignee}</div>
+            <div className="text-sm text-gray-600">{dueDate}</div>
+            <div className="text-sm text-gray-600">{status}</div>
           </div>
-        ))}
       </div>
       {/* Task Details Modal */}
       {selectedTask && (
@@ -60,11 +61,11 @@ function Task({ tasks, updateTaskStatus }) {
           <div className="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5 border w-96 shadow-lg rounded-md bg-white">
             <h3 className="text-lg font-medium text-gray-900 text-center">{selectedTask.name}</h3>
             <div className="mt-2 space-y-3">
-              <p className="text-sm text-gray-600">Assignee: {selectedTask.assignee}</p>
-              <p className="text-sm text-gray-600">Teammates: {selectedTask.teammates}</p>
-              <p className="text-sm text-gray-600">Difficulty: {selectedTask.difficulty}</p>
-              <p className="text-sm text-gray-600">Due date: {selectedTask.deadline}</p>
-              <p className="text-sm text-gray-600">Description: {selectedTask.description}</p>
+              <p className="text-sm text-gray-600">Assignee: {selectedTask.assignee || ''}</p>
+              <p className="text-sm text-gray-600">Teammates: {selectedTask.teammates || ''}</p>
+              <p className="text-sm text-gray-600">Difficulty: {selectedTask.difficulty || ''}</p>
+              <p className="text-sm text-gray-600">Due date: {selectedTask.deadline || ''}</p>
+              <p className="text-sm text-gray-600">Description: {selectedTask.description || ''}</p>
             </div>
             <div className="mt-4 flex justify-end space-x-3">
               <button
@@ -117,5 +118,6 @@ function Task({ tasks, updateTaskStatus }) {
     </>
   );
 }
+
 
 export default Task;
