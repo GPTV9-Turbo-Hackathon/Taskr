@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 //init firebase
-import {auth} from './firebase-config';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -9,7 +8,7 @@ import Login from './components/Login';
 import CreateUser from './components/CreateUser';
 
 import UserMain from './components/UserMain';
-
+import Reward from './components/reward';
 function App() {
   // Simulate a user authentication state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,6 +45,7 @@ function App() {
               <Route path="/" element={isLoggedIn ? <Navigate to="/main" /> : <Home auth={auth} />} />
               <Route path="/main" element={isLoggedIn ? <UserMain onSignoutClick={logout} /> : <Navigate to="/" />} />
               <Route path="*" element={<Navigate to="/" />} />
+              <Route path="/rewardsl" element={<Reward />} />
             </>
           ) : (
             <>
