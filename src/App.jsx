@@ -3,7 +3,7 @@ import './App.css';
 //init firebase
 import { auth } from './firebase-config';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import CreateUser from './components/CreateUser';

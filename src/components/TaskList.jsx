@@ -12,6 +12,16 @@ function TaskList() {
     const updatedTasks = tasks.map(task => task.id === taskId ? { ...task, status: newStatus } : task);
     setTasks(updatedTasks);
   };
+  /* <div className="flex flex-col justify-between h-full">
+      {sampleTask.map((task, index) => (
+        <Task
+          key={index}
+          creator={task.creator}
+          title={task.title}
+          description={task.description}
+          dueDate={task.dueDate.toString()}
+        />
+      ))}*/
 
   return (
     <div className="flex h-screen bg-gray-100">

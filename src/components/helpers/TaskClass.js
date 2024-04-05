@@ -1,17 +1,25 @@
+import { db } from "../../firebase-config";
+import {onValue, ref} from 'firebase/database';
+
 const TaskStatus = {
   Doing: 'Doing',
   Reviewing: 'Reviewing',
   Done: 'Done',
 };
 export default class Task {
-  constructor(creator, title, description, dueDate) {
-    this._creator = creator;
+  constructor(creatorID, title, description, dueDate) {
+    //TODO: Display creator'd name by it's user id
+    this._creatorID = 
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
     this._status = TaskStatus.Doing;
     this._collaborators = [];
     this._subTasks = [];
+    this._creator = onValue(ref(db, `users/${creatorID}`), (snapshot) => {
+      const data = snapshot.val();
+      return data.name;
+    })
   }
   get creator() {
     return this._creator;
