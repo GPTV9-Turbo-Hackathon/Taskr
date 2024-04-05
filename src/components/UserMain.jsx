@@ -3,20 +3,17 @@ import SideBar from './Sidebar';
 import TaskList from './TaskList';
 import ReviewList from './ReviewList';
 
-function UserMain({onSignoutClick}) {
+function UserMain({ onSignoutClick }) {
   return (
     <div className="grid grid-cols-5 h-full w-full">
       <div className="col-span-1">
-        <SideBar onSignoutClick={onSignoutClick}/>
+        <SideBar onSignoutClick={onSignoutClick} />
       </div>
 
-      <div className="col-span-2">
+      <div className="col-span-4">
         <TaskList />
       </div>
 
-      <div className="col-span-2">
-        <ReviewList />
-      </div>
     </div>
   );
 }
