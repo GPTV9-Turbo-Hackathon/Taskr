@@ -40,36 +40,36 @@ function AddTask() {
     }
   };
   
-const processAiResponse = (response) => {
-  if (!response) {
-    console.error('No response received');
-    return;
-  }
-  let tasksJson;
-  try {
-    const cleanResponse = response.replace(/json\n?|/g, '').trim();
-    tasksJson = JSON.parse(cleanResponse);
-    console.log("taskjson is:", tasksJson);
-    setPrelimtasklist([ ...tasksJson]);
-  } catch (error) {
-    console.error('Failed to parse response as JSON:', error);
-    return;
-  }
-  // Assuming tasksJson is an array of tasks
-  /*tasksJson.forEach(task => {
-    const tasksRef = ref(database, 'tasks');
-    push(tasksRef, {
-      taskName: task.name || 'Unnamed task',
-      completed: task.completed || false,
-    }).then(() => {
-      console.log(`Task added: ${task.name}`);
-    }).catch((error) => {
-      console.error('Failed to add task:', error);
-    });
-  });*/
-  
-  alert('Transcript analysed successfully. Check console for tasks.');
-};
+    const processAiResponse = (response) => {
+    if (!response) {
+        console.error('No response received');
+        return;
+    }
+    let tasksJson;
+    try {
+        const cleanResponse = response.replace(/json\n?|/g, '').trim();
+        tasksJson = JSON.parse(cleanResponse);
+        console.log("taskjson is:", tasksJson);
+        setPrelimtasklist([ ...tasksJson]);
+    } catch (error) {
+        console.error('Failed to parse response as JSON:', error);
+        return;
+    }
+    // Assuming tasksJson is an array of tasks
+    /*tasksJson.forEach(task => {
+        const tasksRef = ref(database, 'tasks');
+        push(tasksRef, {
+        taskName: task.name || 'Unnamed task',
+        completed: task.completed || false,
+        }).then(() => {
+        console.log(`Task added: ${task.name}`);
+        }).catch((error) => {
+        console.error('Failed to add task:', error);
+        });
+    });*/
+    
+    alert('Transcript analysed successfully. Check console for tasks.');
+    };
 
     const handleAnalyse = (e) => {
     e.preventDefault();
@@ -94,9 +94,24 @@ const processAiResponse = (response) => {
       });
     };
 
-    function acceptTask(taskId) {
-      console.log('Accepting task:', taskId);
+    function acceptTask(index) {
+      console.log('Accepting task:', index)
+      const tasksRef = ref(database, 'tasks');
       // Implement logic to mark the task as completed
+      push(tasksRef, {
+        taskName: prelimtasklist[index].task,
+        description: prelimtasklist[index].description,
+        due_date: prelimtasklist[index].due_date,
+        assigned_to: prelimtasklist[index].assigned_to,
+        priority: prelimtasklist[index].priority,
+        completed: prelimtasklist[index].completed ? "true" : "false",
+      }).then(() => {
+        alert('Task added successfully!');
+        const updatedTasks = prelimtasklist.filter((task, taskIndex) => taskIndex !== index);
+        setPrelimtasklist(updatedTasks);
+      }).catch((error) => {
+        alert('Failed to add task: ' + error.message);
+      });
     }
 
     function declineTask(index) {
@@ -115,7 +130,7 @@ const processAiResponse = (response) => {
               <span>{task.completed ? 'Completed' : 'Pending'}</span>
             </div>
             <div>
-              <button onClick={() => acceptTask(task.id)} style={{ marginRight: '10px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px', padding: '5px 10px', cursor: 'pointer' }}>✓</button>
+              <button onClick={() => acceptTask(index)} style={{ marginRight: '10px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px', padding: '5px 10px', cursor: 'pointer' }}>✓</button>
               <button onClick={() => declineTask(index)} style={{ backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '5px', padding: '5px 10px', cursor: 'pointer' }}>✕</button>
             </div>
             </div>
