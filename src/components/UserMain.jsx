@@ -2,7 +2,7 @@ import React from 'react';
 import SideBar from './Sidebar';
 import TaskList from './TaskList';
 
-function UserMain({ onSignoutClick, tasks, reviews }) {
+function UserMain({ onSignoutClick, tasks }) {
 
   // Sort to list the one with the nearest due date first
   tasks.sort((a,b) => {
