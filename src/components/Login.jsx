@@ -35,6 +35,7 @@ function Login({ auth }) {
   };
 
   const handleAnonymousLogin = async () => {
+    console.log("anon login")
     try {
       await signInAnonymously(auth);
       // Anonymous login successful.
