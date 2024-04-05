@@ -2,7 +2,7 @@ import React from 'react';
 import SideBar from './Sidebar';
 import TaskList from './TaskList';
 
-function UserMain({ onSignoutClick, tasks }) {
+function UserMain({ onSignoutClick, tasks, uid }) {
   // Sort to list the one with the nearest due date first
   tasks.sort((a, b) => {
     const aDate = new Date(a.dueDate);
@@ -17,7 +17,7 @@ function UserMain({ onSignoutClick, tasks }) {
       </div>
 
       <div className="col-span-4">
-        <TaskList realTasks={tasks} />
+        <TaskList tasks={tasks} uid={uid} />
       </div>
     </div>
   );

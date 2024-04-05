@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { db } from '../firebase-config';
+import { ref, update } from 'firebase/database';
 
-function Task({ task }) {
+function Task({ task, uid }) {
+
   const { dueDate, title } = task;
 
   const [status, setStatus] = useState(task.status);
@@ -8,9 +11,15 @@ function Task({ task }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const updateTaskStatus = (newStatus) => {
-    setStatus((prev) => {
-      return newStatus;
-    });
+    setStatus(newStatus);
+    const taskRef = ref(db, `users/${uid}/tasks/${task.id}`);
+    update(taskRef, { status: newStatus })
+      .then(() => {
+        console.log('update success');
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   const openTaskDetails = (task) => {
