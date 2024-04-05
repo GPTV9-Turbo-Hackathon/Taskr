@@ -33,21 +33,29 @@ function CreateUser({ auth }) {
         points: 0,
         eligibleForReview: false,
         // TODO: Create initial value for every user
-        reviews: { 1: '1' },
+        // reviews: { 1: '1' },
         tasks: sampleTask.map((task, index) => {
-          return { id: index, task };
+          return {
+            id: index,
+            creator: task.creator,
+            title: task.title,
+            description: task.description,
+            dueDate: task.dueDate.toString(),
+            completed: false,
+          };
         }),
       });
     } catch (error) {
       console.error('Error creating user in database', error);
     }
   };
+
   const handleCreateUser = async (e) => {
     e.preventDefault();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, passwordOne);
       const user = userCredential.user;
-      createUserInDatabase(user, firstName, lastName);
+      createUserInDatabase(user, firstName, middleName, lastName);
     } catch (error) {
       console.error('Error creating user', error);
     }
