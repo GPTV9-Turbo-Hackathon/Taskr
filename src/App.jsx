@@ -1,21 +1,20 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
 //init firebase
-import './firebase-config';
-
-import Reward from './components/reward'
+import {auth} from './firebase-config';
+import { getDatabase,ref, set } from 'firebase/database';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { BrowserRouter as Router, Routes, Route, Link, Outlet } from 'react-router-dom';
-import Login from './components/login';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import CreateUser from './components/CreateUser';
 
+import UserMain from './components/UserMain';
 
 function App() {
   // Simulate a user authentication state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const auth = getAuth();
+  // const auth = getAuth();
 
   useEffect(() => {
     // This observer gets called whenever the user's sign-in state changes.
@@ -34,10 +33,13 @@ function App() {
   }, [auth]);
 
   // Simulate a login function
-  const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
-  
+  const logout = () => {
+    auth.signOut();
+    setIsLoggedIn(false);
+  };
+
   return (
+<<<<<<< HEAD
     <Router>
       <nav>
         <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/login">Login</Link>
@@ -55,6 +57,27 @@ function App() {
         )}
       </Routes>
     </Router>
+=======
+    <div className="h-full w-full">
+      <Router>
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={isLoggedIn ? <Navigate to="/main" /> : <Home auth={auth} />} />
+              <Route path="/main" element={isLoggedIn ? <UserMain onSignoutClick={logout} /> : <Navigate to="/" />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Login auth={auth} />} />
+              <Route path="/create-user" element={<CreateUser auth={auth} />} />
+              <Route path="*" element={<Login auth={auth} />} />
+            </>
+          )}
+        </Routes>
+      </Router>
+    </div>
+>>>>>>> 574284ba27c49e30da1f4df0e78359d8717e09a8
   );
 }
 
@@ -68,20 +91,9 @@ function Home({ auth }) {
       <p>Your User ID: {auth.currentUser.uid}</p>
       <h2>Home Page</h2>
       <button onClick={logout}>Logout</button>
+      <Navigate to="/main" />
     </div>
   );
 }
 
-function About() {
-  return (
-
-    <div>
-      <h2>About Page</h2>
-    </div>
-  );
-}
-function NotFound() {
-  return <h2>404 Not Found</h2>;
-}
-
-export default App
+export default App;
