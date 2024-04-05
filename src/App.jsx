@@ -39,6 +39,25 @@ function App() {
   };
 
   return (
+<<<<<<< HEAD
+    <Router>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/login">Login</Link>
+      </nav>
+      <Routes>
+        {isLoggedIn ? (
+          <>
+            <Route path="/" element={<Home auth={auth} />} />
+            <Route path="about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="reward" element={<Reward />} />
+          </>
+        ) : (
+          <Route path="*" element={<Login auth={auth} />} />
+        )}
+      </Routes>
+    </Router>
+=======
     <div className="h-full w-full">
       <Router>
         <Routes>
@@ -58,6 +77,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+>>>>>>> 574284ba27c49e30da1f4df0e78359d8717e09a8
   );
 }
 
