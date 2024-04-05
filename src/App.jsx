@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import './App.css';
 //init firebase
-import {auth} from './firebase-config';
+import { auth } from './firebase-config';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import Login from './components/Login';
 import CreateUser from './components/CreateUser';
 import AddTask from './components/AddTask';
 import UserMain from './components/UserMain';
-
+import Reward from './components/reward';
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
@@ -83,6 +83,7 @@ function App() {
               <Route path="/main" element={<UserMain onSignoutClick={logout} />} />
               <Route path="*" element={<Navigate to="/" />} />
               <Route path="/addtask" element={<AddTask auth={auth} />} />
+              <Route path="/rewardsl" element={<Reward />} />
             </>
           ) : (
             <>
