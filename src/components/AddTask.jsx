@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { db as database } from '../firebase-config'; // Adjust the path as necessary
 import { ref, push } from 'firebase/database';
 import { getFunctions, httpsCallable } from 'firebase/functions';
+import './AddTask.css';
+
 
 function AddTask() {
   const [task, setTask] = useState('');
@@ -122,12 +124,12 @@ function AddTask() {
 
     function renderTaskList(tasks) {
         return tasks.map((task, index) => (
-          <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', width: '80vw', margin: '10px 10px', marginBottom: '10px', borderRadius: '5px', border: '1px solid black', padding: "10px" }}>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '80vw', border: '1px solid black', padding: "10px"}}>
-            <div>
-              <span>{task.task}</span>
-              <span> - </span>
-              <span>{task.completed ? 'Completed' : 'Pending'}</span>
+          <div className='TaskContainer' key={index}>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', }}>
+            <div className='TaskContainerTopBar'>
+              <span style={{fontWeight: 'bold', textDecoration: 'underline'}}>{task.task}</span>
+              <span style={{fontWeight: 'bold', textDecoration: 'underline'}}> - </span>
+              <span style={{fontWeight: 'bold', textDecoration: 'underline'}}>{task.completed ? 'Completed' : 'Pending'}</span>
             </div>
             <div>
               <button onClick={() => acceptTask(index)} style={{ marginRight: '10px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px', padding: '5px 10px', cursor: 'pointer' }}>✓</button>
@@ -135,8 +137,8 @@ function AddTask() {
             </div>
             </div>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-between', width: '80vw'}} className='editableproperties'>
-                <input type="text" value={task.task} onChange={(e) => handleTaskChange(e, index, 'task')} />
-                <input type="text" value={task.description} onChange={(e) => handleTaskChange(e, index, 'description')} />
+                <input className='TaskContainerInputs' type="text" value={task.task} onChange={(e) => handleTaskChange(e, index, 'task')} />
+                <input className='TaskContainerInputs' type="text" value={task.description} onChange={(e) => handleTaskChange(e, index, 'description')} />
                 <input type="date" value={task.due_date} onChange={(e) => handleTaskChange(e, index, 'due_date')} />
                 <input type="text" value={task.assigned_to} onChange={(e) => handleTaskChange(e, index, 'assigned_to')} />
                 <select value={task.priority} onChange={(e) => handleTaskChange(e, index, 'priority')}>
@@ -147,6 +149,17 @@ function AddTask() {
             </div>
           </div>
         ));
+      }
+
+      function createTaskManually() {
+      setPrelimtasklist([...prelimtasklist, {
+        task: "default task",
+        description: null,
+        due_date: null,
+        assigned_to: null,
+        priority: null,
+        completed: null,
+      }]);
       }
 
   return (
@@ -168,16 +181,7 @@ function AddTask() {
           </div>
         )}
       </div>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px', borderRadius: '5px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-        <input
-          type="text"
-          value={task}
-          onChange={handleInputChange}
-          placeholder="Add new task"
-          style={{ padding: '10px', width: '300px', borderRadius: '5px', border: '1px solid #ccc' }}
-        />
-        <button type="submit" style={{ padding: '10px 20px', borderRadius: '5px', backgroundColor: '#007bff', color: 'white', cursor: 'pointer' }}>Add Task</button>
-      </form>
+        <button className='AddManualTaskButton' onClick={createTaskManually}>Add Task Manually</button>
     </div>
   );
 }
