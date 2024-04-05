@@ -11,6 +11,10 @@ import CreateUser from './components/CreateUser';
 import AddTask from './components/AddTask';
 import UserMain from './components/UserMain';
 import Reward from './components/reward';
+import ReviewMain from './components/ReviewMain';
+import TaskMain from './components/TaskMain';
+
+
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
@@ -99,6 +103,8 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
               <Route path="/addtask" element={<AddTask auth={auth} />} />
               <Route path="/rewards" element={<Reward />} />
+              <Route path="/reviews" element={<ReviewMain reviews={reviews} />} />
+              <Route path="/tasks" element={<TaskMain tasks={tasks} />} />
             </>
           ) : (
             <>
