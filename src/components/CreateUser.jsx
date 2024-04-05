@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../firebase-config';
 import { db } from '../firebase-config';
 import { ref, set } from 'firebase/database';
+import sampleTask from './helpers/mockTaskList';
 
 import LoginInputBox from './helpers/LoginInputBox';
 import { useNavigate } from 'react-router-dom';
@@ -12,14 +13,30 @@ function CreateUser({ auth }) {
   const [email, setEmail] = useState('');
   const [passwordOne, setPasswordOne] = useState('');
   const [passwordTwo, setPasswordTwo] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  // TODO: Add avatar upload
+  // const [avatarLink, setAvatarLink] = useState('');
 
   const navigate = useNavigate();
 
-  const createUserInDatabase = async (user) => {
+  const createUserInDatabase = async (user, firstName, middleName, lastName) => {
     try {
       await set(ref(db, `users/${user.uid}`), {
-        email: user.email,
         uid: user.uid,
+        email: user.email,
+        avatar: '',
+        firstName: firstName,
+        middleName: middleName,
+        lastName: lastName,
+        points: 0,
+        eligibleForReview: false,
+        // TODO: Create initial value for every user
+        reviews: { 1: '1' },
+        tasks: sampleTask.map((task, index) => {
+          return { id: index, task };
+        }),
       });
     } catch (error) {
       console.error('Error creating user in database', error);
@@ -30,7 +47,7 @@ function CreateUser({ auth }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, passwordOne);
       const user = userCredential.user;
-      createUserInDatabase(user);
+      createUserInDatabase(user, firstName, lastName);
     } catch (error) {
       console.error('Error creating user', error);
     }
@@ -52,6 +69,33 @@ function CreateUser({ auth }) {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleCreateUser}>
+            <LoginInputBox
+              htmlFor="firstName"
+              id="firstName"
+              name="firstName"
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              text="Enter first name"
+            />
+            <LoginInputBox
+              htmlFor="middleName"
+              id="middleName"
+              name="middleName"
+              type="text"
+              value={middleName}
+              onChange={(e) => setMiddleName(e.target.value)}
+              text="Enter middle name"
+            />
+            <LoginInputBox
+              htmlFor="lastName"
+              id="lastName"
+              name="lastName"
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              text="Enter last name"
+            />
             <LoginInputBox
               htmlFor="email"
               id="email"
