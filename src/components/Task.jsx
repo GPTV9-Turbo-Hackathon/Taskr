@@ -1,9 +1,12 @@
 import React from 'react';
 
-function Task() {
+function Task({creator, title, description, dueDate}) {
   return (
-    <div>
-      <p>This is a task</p>
+    <div className='flex gap-2 bg-red-900 text-sm'>
+      <p>{creator}</p>
+      <p>{title}</p>
+      <p>{description}</p>
+      <p>{dueDate.toString()}</p>
     </div>
   )
 }
