@@ -14,6 +14,13 @@ function SideBar({ onSignoutClick }) {
 
       <button
         className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-4 border border-gray-400 rounded-full shadow my-1"
+        onClick={() => navigate('/addtask')}
+      >
+        Add Tasks
+      </button>
+
+      <button
+        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-4 border border-gray-400 rounded-full shadow my-1"
         onClick={() => navigate('/tasks')}
       >
         Tasks
