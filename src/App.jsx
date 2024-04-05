@@ -83,7 +83,7 @@ function App() {
               <Route path="/main" element={<UserMain onSignoutClick={logout} />} />
               <Route path="*" element={<Navigate to="/" />} />
               <Route path="/addtask" element={<AddTask auth={auth} />} />
-              <Route path="/rewardsl" element={<Reward />} />
+              <Route path="/rewards" element={<Reward />} />
             </>
           ) : (
             <>
