@@ -32,8 +32,6 @@ function CreateUser({ auth }) {
         lastName: lastName,
         points: 0,
         eligibleForReview: false,
-        // TODO: Create initial value for every user
-        // reviews: { 1: '1' },
         tasks: sampleTask.map((task, index) => {
           return { 
             id: index,
