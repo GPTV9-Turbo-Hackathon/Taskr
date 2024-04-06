@@ -1,4 +1,4 @@
-import appLogo from '../assets/app-logo.png'
+import appLogo from '../assets/app-logo.png';
 import React, { useState } from 'react';
 import '../firebase-config';
 import { db } from '../firebase-config';
@@ -9,6 +9,7 @@ import LoginInputBox from './helpers/LoginInputBox';
 import { useNavigate } from 'react-router-dom';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useEffect } from 'react';
 
 function CreateUser({ auth }) {
   const [email, setEmail] = useState('');
@@ -16,6 +17,16 @@ function CreateUser({ auth }) {
   const [passwordTwo, setPasswordTwo] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [isManager, setIsManager] = useState(false);
+
+  useEffect(() => {
+    console.log(isManager)
+  },[isManager]);
+
+  const handleManagerChange = () => {
+    setIsManager(!isManager);
+  };
+
   // TODO: Add avatar upload
   // const [avatarLink, setAvatarLink] = useState('');
 
@@ -31,10 +42,11 @@ function CreateUser({ auth }) {
         lastName: lastName,
         points: 0,
         eligibleForReview: false,
+        isManager: isManager ? 1 : 0,
         // TODO: Create initial value for every user
         // reviews: { 1: '1' },
         tasks: sampleTask.map((task, index) => {
-          return { 
+          return {
             id: index,
             creatorID: task.creatorID,
             title: task.title,
@@ -64,11 +76,7 @@ function CreateUser({ auth }) {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 min-w-">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-15 w-auto"
-            src={appLogo}
-            alt="Your Company"
-          />
+          <img className="mx-auto h-15 w-auto" src={appLogo} alt="Your Company" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create a account
           </h2>
@@ -121,6 +129,7 @@ function CreateUser({ auth }) {
               onChange={(e) => setPasswordTwo(e.target.value)}
               text="Enter your password again"
             />
+            <lable><input type="checkbox" id="isManager" name="isManager" value={isManager} onChange={handleManagerChange} /> Is Manager?</lable>
 
             {passwordOne === passwordTwo ? (
               <div>
