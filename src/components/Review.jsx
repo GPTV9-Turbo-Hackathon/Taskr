@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+/*
 function Review({ review, updateReviewStatus }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showGradeModal, setShowGradeModal] = useState(false);
@@ -46,7 +46,7 @@ function Review({ review, updateReviewStatus }) {
     setGrade('');
     setReviewMessage('');
   };
-
+*/
 function Review({ dueDate, status, title }) {
   return (
     <div className="bg-white shadow rounded-md mb-4">
@@ -64,4 +64,4 @@ function Review({ dueDate, status, title }) {
   );
 }
 
-export default Review;
+export default Review
