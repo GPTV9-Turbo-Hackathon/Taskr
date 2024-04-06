@@ -3,6 +3,7 @@ import { db as database } from '../firebase-config'; // Adjust the path as neces
 import { ref, push } from 'firebase/database';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import './AddTask.css';
+import SideBar from './Sidebar';
 
 
 function AddTask() {
@@ -122,10 +123,16 @@ function AddTask() {
         setPrelimtasklist(updatedTasks);
       }
 
+    function handleTaskChange(e, index, property) {
+    const updatedTasks = [...prelimtasklist];
+    updatedTasks[index][property] = e.target.value;
+    setPrelimtasklist(updatedTasks);
+    }
+
     function renderTaskList(tasks) {
         return tasks.map((task, index) => (
           <div className='TaskContainer' key={index}>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', }}>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <div className='TaskContainerTopBar'>
               <span style={{fontWeight: 'bold', textDecoration: 'underline'}}>{task.task}</span>
               <span style={{fontWeight: 'bold', textDecoration: 'underline'}}> - </span>
@@ -136,15 +143,24 @@ function AddTask() {
               <button onClick={() => declineTask(index)} style={{ backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '5px', padding: '5px 10px', cursor: 'pointer' }}>✕</button>
             </div>
             </div>
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-between', width: '80vw'}} className='editableproperties'>
-                <input className='TaskContainerInputs' type="text" value={task.task} onChange={(e) => handleTaskChange(e, index, 'task')} />
-                <input className='TaskContainerInputs' type="text" value={task.description} onChange={(e) => handleTaskChange(e, index, 'description')} />
-                <input type="date" value={task.due_date} onChange={(e) => handleTaskChange(e, index, 'due_date')} />
-                <input type="text" value={task.assigned_to} onChange={(e) => handleTaskChange(e, index, 'assigned_to')} />
-                <select value={task.priority} onChange={(e) => handleTaskChange(e, index, 'priority')}>
-                  <option value="High">High</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Low">Low</option>
+            <div style={{ display: 'grid', gridTemplateColumns: 'auto auto', gap: '10px', alignItems: 'center', width: '30vw' }} className='editableproperties'>
+                <label htmlFor="taskName">Task:</label>
+                <input className='TaskContainerInputs' type="text" id="taskName" value={task.task} onChange={(e) => handleTaskChange(e, index, 'task')} />
+                
+                <label htmlFor="description">Description:</label>
+                <input className='TaskContainerInputs' type="text" id="description" value={task.description} onChange={(e) => handleTaskChange(e, index, 'description')} />
+                
+                <label htmlFor="dueDate">Date:</label>
+                <input className='TaskContainerInputs' type="date" id="dueDate" value={task.due_date} onChange={(e) => handleTaskChange(e, index, 'due_date')} />
+                
+                <label htmlFor="assignedTo">Assigned to:</label>
+                <input className='TaskContainerInputs' type="text" id="assignedTo" value={task.assigned_to} onChange={(e) => handleTaskChange(e, index, 'assigned_to')} />
+                
+                <label htmlFor="priority">Priority:</label>
+                <select className='TaskContainerInputs' id="priority" value={task.priority} onChange={(e) => handleTaskChange(e, index, 'priority')}>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
                 </select>
             </div>
           </div>
@@ -163,25 +179,36 @@ function AddTask() {
       }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', gap: '20px' }}>
-      <h2>Analyse via Transcript</h2>
-      <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}
-        onSubmit={handleAnalyse} // Added call to handleAnalyse on form submit
-      >
-        <textarea
-          placeholder="Paste your transcript here..."
-          style={{ width: '300px', height: '100px', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
-        />
-        <button type="submit" style={{ padding: '10px 20px', borderRadius: '5px', backgroundColor: '#007bff', color: 'white', cursor: 'pointer' }}>Analyse</button>
-      </form>
-      <div>
-        {prelimtasklist && Object.keys(prelimtasklist).length > 0 && (
-          <div>
-            {renderTaskList(prelimtasklist)}
-          </div>
-        )}
-      </div>
-        <button className='AddManualTaskButton' onClick={createTaskManually}>Add Task Manually</button>
+    <div className="grid grid-cols-5 h-full w-full">
+        <div className="col-span-1">
+            <SideBar />
+        </div>
+        <div className="col-span-4" style={{ display: 'grid', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', gap: '20px', overflowY: 'auto' }}>
+        <h1 style={{fontWeight: 'bold', fontSize: '32px'}}>Add Tasks</h1>
+             <div className="shadow-xl" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '10px', borderRadius: '10px', width: '60vw' }}>
+                
+                <h3 style={{fontWeight: 'bold', fontSize: '20px'}}>Use Transcript</h3>
+                <button className='mainbutton'>Import from Zoom</button>
+                <button className='mainbutton'>Import from Google Meets</button>
+                <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}
+                    onSubmit={handleAnalyse} // Added call to handleAnalyse on form submit
+                >
+                    <textarea
+                    placeholder="Paste your transcript here..."
+                    style={{ width: '300px', height: '100px', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
+                    />
+                    <button type="submit" className='mainbutton'>Analyse</button>
+                </form>
+            </div>
+        <div>
+            {prelimtasklist && Object.keys(prelimtasklist).length > 0 && (
+            <div>
+                {renderTaskList(prelimtasklist)}
+            </div>
+            )}
+        </div>
+            <button style={{backgroundColor: "darkgrey"}} className='mainbutton AddManualTaskButton' onClick={createTaskManually}>Add Task Manually</button>
+        </div>
     </div>
   );
 }
