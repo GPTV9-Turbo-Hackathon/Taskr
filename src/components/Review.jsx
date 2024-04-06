@@ -47,101 +47,19 @@ function Review({ review, updateReviewStatus }) {
     setReviewMessage('');
   };
 
+function Review({ dueDate, status, title }) {
   return (
-    <div className="bg-white shadow rounded-md mb-4 p-4">
-      <div className="grid grid-cols-4 gap-4 items-center">
-        <div className="col-span-3">
-          {/* Check that review exists before trying to access its properties */}
-          <h3 className="text-lg font-medium text-gray-900">{review?.name}</h3>
-          <p className="text-gray-600">{review?.description}</p>
-        </div>
-        <div className="flex space-x-2 justify-end">
-          <button onClick={() => setShowDetails(!showDetails)} className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            {showDetails ? 'Hide' : 'Details'}
-          </button>
-          <button onClick={handleApproveClick} className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Approve
-          </button>
-          <button onClick={handleRejectClick} className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Reject
-          </button>
-        </div>
+    <div className="bg-white shadow rounded-md mb-4">
+      <div className="grid grid-cols-4 px-6 py-4 border-b border-gray-200 last:border-b-0">
+        <button
+          onClick={() => {}}
+          className="col-span-1 text-sm font-medium text-red-600 hover:text-blue-800 transition ease-in-out duration-150"
+        >
+          {title}
+        </button>
+        <div className="text-sm text-gray-600">{dueDate}</div>
+        <div className="text-sm text-gray-600">{status}</div>
       </div>
-      {showDetails && review && (
-        <div className="mt-4 space-y-2">
-          <p className="text-sm text-gray-500">Task Difficulty: {review.difficulty}</p>
-          <p className="text-sm text-gray-500">Assigned to: {review.assignee?.name} (Employee ID: {review.assignee?.id})</p>
-          {/* Additional details here */}
-        </div>
-      )}
-      {/* Grade and Review Message Modal */}
-      {showGradeModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-20">
-          <div className="flex items-center justify-center h-full">
-            <div className="bg-white p-5 border w-96 shadow-lg rounded-md">
-              <div className="space-y-4">
-                {isApproving && (
-                  <select
-                    value={grade}
-                    onChange={handleGradeChange}
-                    className="block w-full p-2 border rounded"
-                  >
-                    <option value="">Select Grade</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                  </select>
-                )}
-                <textarea
-                  placeholder="Type your review message (optional)"
-                  value={reviewMessage}
-                  onChange={handleReviewMessageChange}
-                  className="block w-full p-2 border rounded"
-                />
-              </div>
-              <div className="mt-4 flex justify-between">
-                <button
-                  onClick={() => setShowGradeModal(false)}
-                  className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Close
-                </button>
-                <button
-                  onClick={handleGradeSubmit}
-                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Confirmation Modal */}
-      {showConfirmModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-30">
-          <div className="flex items-center justify-center h-full">
-            <div className="bg-white p-5 border w-96 shadow-lg rounded-md">
-              <p className="text-gray-900 text-lg">Are you sure you want to submit?</p>
-              <div className="mt-4 flex justify-between">
-                <button
-                  onClick={() => setShowConfirmModal(false)}
-                  className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  No
-                </button>
-                <button
-                  onClick={handleFinalSubmit}
-                  className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Yes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
