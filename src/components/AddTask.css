@@ -1,5 +1,7 @@
 .AddManualTaskButton {
-  @apply w-4/5 h-10 px-5 rounded-md border-dashed border-2 border-gray-200  text-gray-700 cursor-pointer text-base transition-colors duration-300 ease-in-out shadow-xl;
+    
+  @apply bg-gray-200  border-dashed border-2 border-gray-200   duration-300  shadow-md rounded-md;
+  margin-bottom: 10px;
 }
 
 .AddManualTaskButton:hover {
@@ -7,13 +9,20 @@
 }
 
 .TaskContainer {
-    @apply p-10 rounded-md text-gray-700 shadow-xl;
-    display: flex;
-    flex-direction: column;
+    @apply p-5   rounded-md shadow-md;
+
+
     align-items: center;
-    justify-content: space-between;
-    width: 80vw;
-    margin: 10px 10px;
-    margin-bottom: 10px;
+
+
+    width: 60vw;
+
+
+  }
+
+.mainbutton {
+    @apply p-2.5 rounded-md bg-blue-600 text-white cursor-pointer;
     border-radius: 5px;
+    background-color: #007bff;
+    color: white;
   }

@@ -18,7 +18,7 @@ function UserMain({ onSignoutClick, tasks }) {
       </div>
 
       <div className="col-span-4">
-        <TaskList realTasks={tasks}/>
+        <TaskList tasks={tasks}/>
       </div>
 
 
