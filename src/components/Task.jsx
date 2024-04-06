@@ -4,6 +4,8 @@ import { ref, update } from 'firebase/database';
 
 function Task({ task, uid }) {
 
+  console.log(uid)
+
   const { dueDate, title } = task;
 
   const [status, setStatus] = useState(task.status);

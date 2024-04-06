@@ -13,6 +13,7 @@ import UserMain from './components/UserMain';
 import Reward from './components/reward';
 import ReviewMain from './components/ReviewMain';
 import TaskMain from './components/TaskMain';
+import SubmittedMain from './components/SubmittedMain';
 
 const AuthContext = createContext();
 
@@ -61,7 +62,7 @@ function App() {
 
   const [tasks, setTasks] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [uid, setUid] = useState(null);
+  const [uid, setUid] = useState(currentUser ? currentUser.uid : null)
 
   useEffect(() => {
     // This will now re-run whenever currentUser changes, ensuring currentUser is not null when accessed
@@ -93,11 +94,12 @@ function App() {
           <>
             <Route path="/" element={isLoggedIn ? <Navigate to="/main" /> : <Home auth={auth} />} />
             <Route path="/main" element={<UserMain onSignoutClick={logout} tasks={tasks} reviews={reviews} />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/tasks" element={<TaskMain onSignoutClick={logout} tasks={tasks} uid={uid} />} />
+            <Route path="/submitted" element={<SubmittedMain onSignoutClick={logout} tasks={tasks} uid={uid} />} />
+            <Route path="/reviews" element={<ReviewMain onSignoutClick={logout} tasks={tasks} />} />
             <Route path="/addtask" element={<AddTask auth={auth} />} />
             <Route path="/rewards" element={<Reward />} />
-            <Route path="/reviews" element={<ReviewMain reviews={reviews} />} />
-            <Route path="/tasks" element={<TaskMain tasks={tasks} uid={uid} />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </>
         ) : (
           <>
