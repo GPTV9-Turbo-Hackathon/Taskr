@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import LoginInputBox from './helpers/LoginInputBox';
 import appLogo from '../assets/app-logo.png'
+import placeholderPfp from '../assets/placeholder-pfp.png';
 
 /*
   Link: https://tailwindui.com/components/application-ui/forms/sign-in-forms

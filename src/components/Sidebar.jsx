@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import placeholderPfp from '../assets/placeholder-pfp.png';
+
 
 function SideBar({ onSignoutClick }) {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col justify-between bg-slate-500 h-full p-5">
       <img
-        src="src/assets/placeholder-pfp.png"
+        src={placeholderPfp}
         alt="Your Profile Picture"
         className="rounded-full object-contain mb-5"
       />
