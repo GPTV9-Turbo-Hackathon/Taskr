@@ -4,9 +4,9 @@ import TaskList from './TaskList';
 
 function TaskMain({ onSignoutClick, tasks, uid }) {
   // Sort to list the one with the nearest due date first
-  console.log("TaskMain tasks", uid)
+  console.log('TaskMain tasks', uid);
 
-  const unfinishedTasks = tasks.filter(task => task.status !== 'Submitted, pending review');
+  const unfinishedTasks = tasks.filter((task) => task.status !== 'Submitted, pending review');
   unfinishedTasks.sort((a, b) => {
     const aDate = new Date(a.dueDate);
     const bDate = new Date(b.dueDate);
@@ -20,6 +20,7 @@ function TaskMain({ onSignoutClick, tasks, uid }) {
       </div>
 
       <div className="col-span-4">
+        <h1 className="text-3xl font-semibold text-gray-900 mb-4">Marketing Tasks</h1>
         <TaskList tasks={unfinishedTasks} uid={uid} />
       </div>
     </div>
