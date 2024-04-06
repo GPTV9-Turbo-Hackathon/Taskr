@@ -1,4 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+function Review({ review, updateReviewStatus }) {
+  const [showDetails, setShowDetails] = useState(false);
+  const [showGradeModal, setShowGradeModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [grade, setGrade] = useState('');
+  const [reviewMessage, setReviewMessage] = useState('');
+  const [isApproving, setIsApproving] = useState(true); // true for approve, false for reject
+
+  const calculateTimeBeforeDeadline = (deadline) => {
+    const deadlineDate = new Date(deadline);
+    const now = new Date();
+    const difference = deadlineDate.getTime() - now.getTime();
+    const daysBeforeDeadline = Math.floor(difference / (1000 * 3600 * 24));
+    return daysBeforeDeadline >= 0 ? `${daysBeforeDeadline} days early` : 'Past deadline';
+  };
+
+  const handleApproveClick = () => {
+    setIsApproving(true);
+    setShowGradeModal(true);
+  };
+
+  const handleRejectClick = () => {
+    setIsApproving(false);
+    setShowGradeModal(true);
+  };
+
+  const handleGradeSubmit = () => {
+    setShowGradeModal(false);
+    setShowConfirmModal(true);
+  };
+
+  const handleGradeChange = (e) => {
+    setGrade(e.target.value);
+  };
+
+  const handleReviewMessageChange = (e) => {
+    setReviewMessage(e.target.value);
+  };
+
+  const handleFinalSubmit = () => {
+    updateReviewStatus(review.id, isApproving ? 'Approved' : 'Rejected');
+    // Here, you would also send `grade` and `reviewMessage` to your backend or state management
+    setShowConfirmModal(false);
+    setGrade('');
+    setReviewMessage('');
+  };
 
 function Review({ dueDate, status, title }) {
   return (
