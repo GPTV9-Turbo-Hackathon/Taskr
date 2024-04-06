@@ -1,3 +1,4 @@
+import appLogo from '../assets/app-logo.png'
 import React, { useState } from 'react';
 import '../firebase-config';
 import { db } from '../firebase-config';
@@ -14,21 +15,19 @@ function CreateUser({ auth }) {
   const [passwordOne, setPasswordOne] = useState('');
   const [passwordTwo, setPasswordTwo] = useState('');
   const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
   // TODO: Add avatar upload
   // const [avatarLink, setAvatarLink] = useState('');
 
   const navigate = useNavigate();
 
-  const createUserInDatabase = async (user, firstName, middleName, lastName) => {
+  const createUserInDatabase = async (user, firstName, lastName) => {
     try {
       await set(ref(db, `users/${user.uid}`), {
         uid: user.uid,
         email: user.email,
         avatar: '',
         firstName: firstName,
-        middleName: middleName,
         lastName: lastName,
         points: 0,
         eligibleForReview: false,
@@ -55,7 +54,7 @@ function CreateUser({ auth }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, passwordOne);
       const user = userCredential.user;
-      createUserInDatabase(user, firstName, middleName, lastName);
+      createUserInDatabase(user, firstName, lastName);
     } catch (error) {
       console.error('Error creating user', error);
     }
@@ -66,8 +65,8 @@ function CreateUser({ auth }) {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 min-w-">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            className="mx-auto h-15 w-auto"
+            src={appLogo}
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -85,15 +84,6 @@ function CreateUser({ auth }) {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               text="Enter first name"
-            />
-            <LoginInputBox
-              htmlFor="middleName"
-              id="middleName"
-              name="middleName"
-              type="text"
-              value={middleName}
-              onChange={(e) => setMiddleName(e.target.value)}
-              text="Enter middle name"
             />
             <LoginInputBox
               htmlFor="lastName"

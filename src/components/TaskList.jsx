@@ -2,16 +2,13 @@
 import React from 'react';
 import Task from './Task';
 
-function TaskList({ realTasks }) {
-
-  const tasks = realTasks || [];
+function TaskList({ tasks, uid }) {
 
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="flex-grow p-6 overflow-auto">
-        <h1 className="text-3xl font-semibold text-gray-900 mb-4">Marketing Tasks</h1>
         {tasks.map((task, index) => (
-          <Task key={task.id || index} task={task} />
+          <Task key={task.id || index} task={task} uid={uid} />
         ))}
       </div>
     </div>
